@@ -1,0 +1,98 @@
+{% extends "base_without_nav.html" %}
+
+{% block content %}
+<form action="{{ url_for('profile') }}" method="post" class="form-horizontal px-sm-5">
+    <h1>Профиль</h1>
+    {{ form.hidden_tag() }}
+    <div class="form-group-sm">
+        <div class="col-xs-5">
+            {{ form.name.label(class="control-label col-xs-3") }}<br>
+            {{ form.name(class="form-control form-control-sm w-25") }}<br>
+            {% for error in form.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-xs-5">
+        {{ form.email.label(class="control-label col-xs-3") }}<br>
+        {{ form.email(class="form-control form-control-sm w-25") }}<br>
+        {% for error in form.email.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="col-xs-5">
+        {{ form.phone.label(class="control-label col-xs-3") }}<br>
+        {{ form.phone(class="form-control form-control-sm w-25") }}<br>
+        {% for error in form.phone.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="col-xs-5">
+        {{ form.consignee.label(class="control-label col-xs-3") }}
+        {{ form.consignee(class="form-control form-control-sm w-25") }}<br>
+        {% for error in form.consignee.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="table-responsive">
+        <h5>Контракты</h5>
+        <table class="table table-bordered w-25">
+        <tbody>
+            {% for contract in form.contracts.choices %}
+                <tr>
+                    <td class="col-md-auto">  
+                        {{ contract[1] }}  
+                    </td>    
+                </tr>
+            {% endfor %}
+        </tbody>    
+        </table>
+    </div>
+    <div class="table-responsive">
+        <h5>ИНН / КПП</h5>
+        <table class="table table-bordered w-25">
+            <tbody>
+                <tr>
+                    <td class="col-md-auto">
+                        {{ form.inn.label(class="control-label col-xs-3") }}<br>
+                        {{ form.inn(class="form-control form-control-sm w-40") }}<br>
+                        {% for error in form.inn.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+
+                        {{ form.kpp.label(class="control-label col-xs-3") }}<br>
+                        {{ form.kpp(class="form-control form-control-sm w-40") }}<br>
+                        {% for error in form.kpp.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xs-5">
+        {{ form.catalog_exp.label(class="control-label col-xs-3") }}<br>
+        {{ form.catalog_exp(class="form-control form-control-sm w-25") }}<br>
+        {% for error in form.catalog_exp.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="col-xs-5">
+        {{ form.file_type_exp.label(class="control-label col-xs-3") }}<br>
+        {{ form.file_type_exp(class="form-control form-control-sm w-25") }}<br>
+        {% for error in form.file_type_exp.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="col-xs-5">
+        <button class="btn btn-primary" role="submit" name="close_profile">
+            Сохранить
+        </button>
+        <a href="{{ url_for('index') }}">
+            Назад
+        </а>
+    </div>
+</form>
+{% endblock %}

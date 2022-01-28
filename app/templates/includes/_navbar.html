@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary mb-4>
+        <div class=" collapse navbar-collapse" id="navbarSupportedContent">
+    <a class="navbar-brand" href="{{ url_for('index') }}">ШКУРЕНКО</a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                {% if current_user.username and current_user.active %}
+                {{ current_user.username }}
+                {% else %}
+                Войти
+                {% endif %}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% if current_user.is_anonymous %}
+                <form action="" method="post" class="signin">
+                    {{ form.hidden_tag() }}                  
+                    <div class="container">
+                        <p>
+                            {{ form.username.label }}<br>
+                            {{ form.username(size=32) }}
+                            {% for error in form.username.errors %}
+                            <span style="color: red"></span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.password.label }}<br>
+                            {{ form.password(size=32) }}
+                            {% for error in form.password.errors %}
+                            <span style="color: red"></span>
+                            {% endfor %}
+                        </p>
+                        <div class="checkbox mb-3 ">
+                            {{ form.remember_me() }} {{ form.remember_me.label }}
+                        </div>
+                        <button class="btn btn-primary " type="submit ">Войти</button>
+                        <a href="{{ url_for('register') }}">Регистрация</a>
+                    </div>
+                    {% else %}
+                    <a class="dropdown-item" href="{{ url_for('catalog') }}">Каталог</a>
+                    <a class="dropdown-item" href="{{ url_for('orders') }}">Заказы</a>
+                    <a class="dropdown-item" href="{{ url_for('profile') }}">Мой профиль</a>
+<!--                     <a class="dropdown-item" href="#">Отчеты</a>
+                    <a class="dropdown-item" href="#">Менеджер</a>-->
+                    <hr> 
+                    <a class="dropdown-item" href="#">Новости</a>
+                    <a class="dropdown-item" href="#">Акции</a>                                  
+                    <hr>
+                    <a class="dropdown-item" href="{{ url_for('logout') }}">Выйти</a>
+                    {% endif %}
+            </div>
+        </li>
+
+    </ul>
+    {% if not current_user.is_anonymous %}
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Поиск" name="q" value="{{ request.args.get('q', '') }}" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Найти</button>
+    </form>
+    {% endif %}
+    </div>
+</nav>

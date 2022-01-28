@@ -1,0 +1,62 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1>Каталог</h1>
+    <form onclick="preOrder(event)" action="{{ url_for('new_order') }}" method="get" class="form-horizontal-right">
+        <button class="btn btn-primary pull-right" role="submit" id="btnCart" name="cart">
+            {{'Корзина %d' % profile.cart.count()}}
+        </button>
+    </form>
+    <br>
+    <table class="table table-hover" id="catalog" name="catalog">
+        <tr>
+            <th class="d-none">Код</th>
+            <th>Наименование</th>
+            <th>Артикул</th>
+            <th>Производитель</th>
+            <th>НДС</th>
+            <th>Цена</th>
+            <th>Остаток</th>
+            <th>Количество (Заказ)</th>
+            <th></th>
+        </tr>
+        {% for product in products %}
+
+        <tr>
+            <td class="d-none" id="code" name="code">{{product.id}}</td>
+            <td id="name" name="name">{{product.name}}</td>
+            <td id="article" name="article">{{product.article}}</td>
+            <td id="producer" name="producer">{{product.producer}}</td>
+            <td id="nds" name="nds">{{product.nds}}</td>
+            <td id="price" name="price">{{product.price}}</td>
+            <td id="balance" name="balance">{{product.balance}}</td>
+            <td><input type="text" class="form-control-sm" maxlength=6 id="count" name="count" oninput="update_cart(event)"
+                    value={{ product.quantity }}>
+            </td>
+            <td>
+                <a href="#" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal" onclick="product_info(event)" size = "24">Подробнее</a>
+                <form action="" method="">
+                    <div class="modal fade" id="myModal" tabindex="-1">
+
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" id="productName"></div>
+                                <div class="modal-body" id=productDescription></div>    
+                                <div class="modal-footer">
+                                    <button class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<form action="{{ url_for('orders') }}" method="POST" class="form-horizontal">
+    {{ form.hidden_tag() }}
+    <div class="col-xs-5 col-auto">
+        {{ form.supplier.label(class="control-label col-xs-3") }}
+        {{ form.supplier(size=32,class="form-control form-control-sm") }}
+        {% for error in form.supplier.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+
+    <div class="col-xs-5 col-auto">
+        {{ form.buyer.label(class="control-label col-xs-3") }}
+        {{ form.buyer(size=32,class="form-control form-control-sm", value=profile.name) }}
+        {% for error in form.buyer.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+
+    <div class="col-xs-5 col-auto">
+        {{ form.consignee.label(class="control-label col-xs-3") }}
+        {{ form.consignee(class="form-control") }}
+        {% for error in form.consignee.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+
+    <div class="col-xs-5 col-auto">
+        {{ form.delivery_date.label(class="control-label col-xs-3") }}
+        {{ form.delivery_date(size=32, type="date", class="form-control") }}
+        {% for error in form.delivery_date.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        <br>
+    </div>
+    <h5>Состав</h5>
+    <br>
+    <div class="col-xs-5 col-auto">
+        <table class="table table-hover" id="OrderItems" name="OrderItems">
+            <tr>
+                <th class="d-none">Код</th>
+                <th>Наименование</th>
+                <th class="d-none">Артикул</th>
+                <th class="d-none">Производитель</th>
+                <th>НДС</th>
+                <th>Цена</th>
+                <th class="d-none">Остаток</th>
+                <th>Количество</th>
+                <th>Сумма</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td id="code" name="code" style="display: none;">{{product.id}}</td>
+                <td id="name" name="name">{{product.name}}</td>
+                <td id="nds" name="nds">{{product.nds}}</td>
+                <td id="price" name="price">{{product.price}}</td>
+                <td id="quantity" name="quantity">{{ product.quantity }}</td>
+                <td id="sum" name="sum" id="sum">{{product.sum}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Всего: <b id="total">{{total}}</b></td>
+            </tr>
+        </table>
+        <br>
+        <div class="col-xs-5 col-auto">
+            {{ form.comment.label(class="control-label col-xs-3") }}
+            {{ form.comment(size=32, type="date", class="form-control") }}
+            {% for error in form.buyer.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            <br>
+        </div>
+        <div class="col-xs-10 text-right">
+            <button class="btn btn-primary pull-right" role="submit" name="submit_order">
+                Закрыть
+            </button>
+        </div>
+    </div>
+    {{ endfor }}
+
+</form>
+
+{% endblock %}

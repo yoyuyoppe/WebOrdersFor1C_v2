@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Заказы</h1>
+<br>
+<div class="container-fluid"></div>
+<table class="table table-hover" id="orders" name="orders">
+
+    <tr>
+        <th>Номер</th>
+        <th>Дата</th>
+        <th>Дата доставки</th>
+        <th>Адрес доставки</th>
+        <th>Сумма</th>
+        <th>Комментарий</th>
+        <th>Статус</th>
+        <th></th>
+    </tr>
+
+
+    {% for order in orders %}
+
+    <tr onclick="clickOrders(event)">  
+        <td id="order_id">{{order.id}}</td>
+        <td>{{order.date}}</td>
+        <td>{{order.delivery_date}}</td>
+        <td>{{Consignee.query.get(order.addr_id)}}</td>
+        <td>{{order.sum}}</td>
+        <td>{{order.comment}}</td>
+        <td>{{order.status}}</td>
+        {% if order.status != "Отклонен" %}
+            <td><button class="btn btn-danger" id="btnOrderRejected" href="{{ url_for('order', id_order=order.id, rejected=1) }}">Отменить</button></td>
+        {% endif %}
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}
